@@ -1,0 +1,72 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.container {
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+    background: limegreen;
+    position: relative;
+}
+
+.container:hover {
+    top: 20px;
+    left: 20px;
+} 
+
+.montainer {
+    width: 200px;
+    height: 200px;
+    background: cornflowerblue;
+    margin: 20px auto;
+    position: relative;
+}
+
+.montainer-child {
+    width: 100px;
+    height: 100px;
+    background: yellow;
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    transition: 0.5s;
+}
+
+.montainer:hover > .montainer-child {
+    top: 150px;
+    left: 150px;
+}
+
+.g2t {
+    width: max-content;
+    padding: 8px 16px;
+    background: teal;
+    color: #fff;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.g2t:hover {
+    background: brown;
+} 
+
+.dhaka {
+    width: 200px;
+    height: 600px;
+    margin: 20px auto 1200px;
+    background: lightblue;
+}
+
+.dhanmondi {
+    width: 200px;
+    height: 200px;
+    background: lightgoldenrodyellow;
+    position: sticky;
+    top: 20px;
+    left: 0;
+}
