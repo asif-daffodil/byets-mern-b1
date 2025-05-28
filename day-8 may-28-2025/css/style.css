@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 800px;
+    margin: 20px auto;
+    border: 1px solid #333;
+    display: table;
+}
+
+.row {
+    display: table-row;
+}
+
+.col {
+    display: table-cell;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ccc;
+    vertical-align: middle;
+}
+
+.col:not(:last-child) {
+    border-right: 1px solid #ccc;
+}
+
+.siam {
+    width: 300px;
+    height: 300px;
+    background: url("../images/person1.jpeg");
+    background-size: cover;
+    margin: 20px auto;
+    border: 1px solid #333;
+    transition: transform 0.5s linear;
+}
+
+.siam:hover {
+    /* transform: translateX(20px) translateY(20px); */
+    /* transform: translate(20px, 20px); */
+    /* transform: skewX(-10deg) skewY(-10deg); */
+    /* transform: skew(-10deg, -10deg); */
+    /* transform: translate(20px, 20px) rotate(360deg) skew(-10deg, -10deg) scale(0.8); */
+    /* matrix(scaleX(), skewY(), skewX(), scaleY(), translateX(), translateY()) */
+    transform: matrix(1, 0, 0, 1, 20, 20);
+}
+
+.chagol {
+    width: 400px;
+    height: 400px;
+    margin: 20px auto;
+    /* animation-name: siamAnimation;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; */
+    animation: siamAnimation 5s infinite linear;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 20px;
+}
+
+@keyframes siamAnimation {
+    0% {
+        background: url("../images/portfolio-2.jpg");
+        background-size: cover;
+        transform: rotate(0deg);
+        left: -400px;
+    }
+    50% {
+        background: url("../images/goat.jpeg");
+        background-size: cover;
+        transform: rotate(180deg);
+        left: calc(50% - 200px);
+    }
+    100% {
+        background: url("../images/portfolio-2.jpg");
+        background-size: cover;
+        transform: rotate(360deg);
+        left: 100%;
+    }
+}
