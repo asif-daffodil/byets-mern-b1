@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+$headingColor: #4a90e2;
+$paraColor: #333;
+
+@mixin styleHeading ($fs: 32px, $fw: normal) {
+    color: $headingColor;
+    font-size: $fs;
+    font-weight: $fw;
+}
+
+.main {
+    >h1 {
+        @include styleHeading(40px, bold);
+    }
+    >p{
+        color: $paraColor;
+        &:hover {
+            color: darken($paraColor, 10%);
+        }
+    }
+    >a {
+        // is clicked
+        &:active {
+            color: darken($headingColor, 20%);
+        }
+        // is visited
+        &:visited {
+            color: lighten($headingColor, 20%);
+        }
+    }
+}
+
+.pain {
+    @extend .main;
+}

@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Space Grotesk", sans-serif;
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 60px 100px;
+    
+    >.header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 70px;
+        >.menubar {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            >li{
+                &:not(:last-child){
+                    margin-right: 40px;
+                }
+                >a{
+                    text-decoration: none;
+                    font-size: 20px;
+                    color: #000;
+                    >button{
+                        padding: 20px 35px;
+                        font-size: 20px;
+                        background: transparent;
+                        border-radius: 14px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    >.hero {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 70px;
+        >.start{
+            width: 531px;
+            >h1{
+                font-size: 60px;
+                font-weight: 500;
+            }
+            >p {
+                font-size: 20px;
+                width: 498px;
+                margin: 35px 0;
+            }
+            >button {
+                border-width: 0;
+                width: 264px;
+                height: 68px;
+                background: #191A23;
+                border-radius: 14px;
+                font-size: 20px;
+                color: #fff;
+            }
+        }
+    }
+
+    >.partners{
+        >ul{
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            >li{
+                >img{
+                    max-width: 100%;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
