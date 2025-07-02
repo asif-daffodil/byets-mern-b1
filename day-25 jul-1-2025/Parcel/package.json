@@ -1,0 +1,14 @@
+{
+  "name": "parcel-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "devDependencies": {
+    "parcel": "^2.15.4"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.7"
+  }
+}
