@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <div class="w-screen h-screen bg-purple-600 flex">
+        <div class="bg-white m-auto p-4 rounded">
+            <h1 class="text-2xl md:text-4xl mb-2 md:mb-4">Sign Up</h1>
+            <form action="https://google.com" id="regForm">
+                <input type="text" placeholder="Your Name" name="yName"
+                    class="w-80 p-2 border rounded block outline-purple-600">
+                <div class="text-red-600 text-sm pb-2 px-2 min-h-6 w-80"></div>
+                <input type="text" placeholder="Your Email" name="yEmail"
+                    class="w-80 p-2 border rounded block outline-purple-600">
+                <div class="text-red-600 text-sm pb-2 px-2 min-h-6 w-80"></div>
+                <input type="password" placeholder="Your Password" name="yPass"
+                    class="w-80 p-2 border rounded block outline-purple-600">
+                <div class="text-red-600 text-sm pb-2 px-2 min-h-6 w-80"></div>
+                <input type="password" placeholder="Confirm Password" name="conPass"
+                    class="w-80 p-2 border rounded block outline-purple-600">
+                <div class="text-red-600 text-sm pb-2 px-2 min-h-6 w-80"></div>
+                <label class="flex items-center mt-[-6px] mb-4">
+                    <input type="checkbox" class="mr-2" name="showPass" id="showPass">
+                    <span class="text-sm">Show Password</span>
+                </label>
+                <button type="submit"
+                    class="bg-purple-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-purple-800">Sign
+                    up</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const regForm = document.getElementById("regForm");
+
+        regForm.addEventListener("submit", e => {
+            e.preventDefault();
+            const formData = new FormData(regForm);
+            const yname = formData.get("yName");
+            const yemail = formData.get("yEmail");
+            const ypass = formData.get("yPass");
+            const conPass = formData.get("conPass");
+
+
+            const validateName = (yname) => {
+                if (yname === "") {
+                    regForm[0].nextElementSibling.textContent = "Please enter your name";
+                } else if (!yname.match(/^[a-zA-Z. ]+$/)) {
+                    regForm[0].nextElementSibling.textContent = "Name can only contain letters and spaces";
+                } else {
+                    regForm[0].nextElementSibling.textContent = "";
+                }
+            }
+            validateName(yname);
+
+            const validateEmail = (yemail) => {
+                if (yemail === "") {
+                    regForm[1].nextElementSibling.textContent = "Please enter your email";
+                } else if (!yemail.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+                    regForm[1].nextElementSibling.textContent = "Please enter a valid email address";
+                } else {
+                    regForm[1].nextElementSibling.textContent = "";
+                }
+            }
+            validateEmail(yemail);
+
+            const validatePassword = (ypass) => {
+                if (ypass === "") {
+                    regForm[2].nextElementSibling.textContent = "Please enter your password";
+                } else if (!ypass.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z \d@$!%*?&]{8,}$/)) {
+                    regForm[2].nextElementSibling.textContent = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character";
+                } else {
+                    regForm[2].nextElementSibling.textContent = "";
+                }
+            }
+            validatePassword(ypass);
+
+            const validateConfirmPassword = (conPass) => {
+                if (conPass === "") {
+                    regForm[3].nextElementSibling.textContent = "Please confirm your password";
+                } else if (conPass !== ypass) {
+                    regForm[3].nextElementSibling.textContent = "Passwords do not match";
+                } else {
+                    regForm[3].nextElementSibling.textContent = "";
+                }
+            }
+            validateConfirmPassword(conPass);
+
+            regForm[0].addEventListener("keyup", () => validateName(regForm[0].value));
+            regForm[1].addEventListener("keyup", () => validateEmail(regForm[1].value));
+            regForm[2].addEventListener("keyup", () => validatePassword(regForm[2].value));
+            regForm[3].addEventListener("keyup", () => validateConfirmPassword(regForm[3].value));
+        });
+
+        const showPass = document.getElementById("showPass");
+        showPass.addEventListener("change", () => {
+            const isChecked = showPass.checked;
+            regForm[2].type = isChecked ? "text" : "password";
+            regForm[3].type = isChecked ? "text" : "password";
+        }); 
+    </script>
+
+</body>
+
+</html>
