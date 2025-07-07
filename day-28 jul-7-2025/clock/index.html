@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <div class="w-screen h-screen flex">
+        <div class="m-auto w-96 border rounded shadow p-4 bg-white">
+            <div class="text-4xl text-center" id="time"></div>
+            <div class="text-2xl text-center my-5" id="day"></div>
+            <div id="week" class="grid grid-cols-7 gap-1"></div>
+            <button class="block mt-5 mx-auto bg-blue-500 text-white py-1 px-2 rounded cursor-pointer hover:bg-blue-600" id="change-bg">Change BG</button>
+        </div>
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
