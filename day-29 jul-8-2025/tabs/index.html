@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div class="w-screen h-screen flex">
+        <div class="w-96 m-auto border">
+            <div class="w-full flex" id="cities">
+                <div class="w-full text-center border-r border-black py-2 cursor-pointer bg-stone-700 text-white">Dhaka</div>
+                <div class="w-full text-center border-r border-black py-2 hover:bg-gray-200 cursor-pointer border-b">Rajshahi</div>
+                <div class="w-full text-center border-r border-black py-2 hover:bg-gray-200 cursor-pointer border-b">Khulna</div>
+                <div class="w-full text-center border-b border-black py-2 hover:bg-gray-200 cursor-pointer">Rangpur</div>
+            </div>
+            <div class="w-full relative h-36 bg-stone-700 text-white" id="details">
+                <div class="absolute p-4 top-0 left-0 transition-all duration-300">
+                    Dhaka is the capital of Bangladesh. It is known for its vibrant culture and rich history. The city is a major economic, political, and cultural center in the country.
+                </div>
+                <div class="absolute p-4 top-0 left-0 invisible opacity-0 transition-all duration-300">
+                    Rajshahi is known for its silk industry and mangoes. It is located in the northwest part of Bangladesh and is famous for its educational institutions.
+                </div>
+                <div class="absolute p-4 top-0 left-0 invisible opacity-0 transition-all duration-300">
+                    Khulna is the gateway to the Sundarbans, the largest mangrove forest in the world. It is an important port city in southwestern Bangladesh.
+                </div>
+                <div class="absolute p-4 top-0 left-0 invisible opacity-0 transition-all duration-300">
+                    Rangpur is known for its agriculture and is a major producer of crops like potatoes and rice. The city has a rich cultural heritage and is famous for its traditional music and dance.
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const cities = document.getElementById('cities');
+        const details = document.getElementById('details');
+        Array.from(cities.children).forEach((child, index) => {
+            child.addEventListener('click', () => {
+                const descriptions = details.children;
+                Array.from(descriptions).forEach((desc, i) => {
+                    if (i === index) {
+                        cities.children[i].classList.add('bg-stone-700', 'text-white');
+                        cities.children[i].classList.remove('hover:bg-gray-200', 'border-b');
+                        desc.classList.remove('invisible', 'opacity-0');
+                    } else {
+                        cities.children[i].classList.remove('bg-stone-700', 'text-white');
+                        cities.children[i].classList.add('hover:bg-gray-200', 'border-b');
+                        desc.classList.add('invisible', 'opacity-0');
+                    }
+                });
+            });
+        });
+    </script>
+  </body>
+</html>

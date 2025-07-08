@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div class="w-screen h-screen flex">
+        <div class="w-96 m-auto">
+            <div class="w-full border mb-3">
+                <header class="p-2 font-bold cursor-pointer hover:bg-gray-200 relative accordion">
+                    What is your name?
+                    <i class="fa fa-chevron-down absolute right-2 top-1/2 -translate-y-1/2 transition-transform duration-300"></i>
+                </header>
+                <article class="p-0 h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+                    My name is <span class="text-blue-500">John Doe</span>.
+                </article>
+            </div>
+            <div class="w-full border mb-3">
+                <header class="p-2 font-bold cursor-pointer hover:bg-gray-200 relative accordion">
+                    What is your age?
+                    <i class="fa fa-chevron-down absolute right-2 top-1/2 -translate-y-1/2 transition-transform duration-300"></i>
+                </header>
+                <article class="p-0 h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+                    My age is <span class="text-blue-500">30</span>.
+                </article>
+            </div>
+            <div class="w-full border mb-3">
+                <header class="p-2 font-bold cursor-pointer hover:bg-gray-200 relative accordion">
+                    What is your favorite color?
+                    <i class="fa fa-chevron-down absolute right-2 top-1/2 -translate-y-1/2 transition-transform duration-300"></i>
+                </header>
+                <article class="p-0 h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+                    My favorite color is <span class="text-blue-500">blue</span>.
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.accordion').forEach(header => {
+            header.addEventListener('click', () => {
+            // Add text-gray-400 class to the header
+            header.classList.toggle('bg-gray-300');
+            const article = header.nextElementSibling;
+            const isOpen = article.style.height && article.style.height !== '0px';
+    
+            // Toggle the height, opacity and padding
+            article.style.padding = isOpen ? '0' : '8px';
+            article.style.height = isOpen ? '0px' : 'auto';
+            article.style.opacity = isOpen ? '0' : '1';
+    
+            // Rotate the icon
+            const icon = header.querySelector('i');
+            icon.classList.toggle('rotate-180', !isOpen);
+            });
+        });
+    </script>
+  </body>
+</html>
