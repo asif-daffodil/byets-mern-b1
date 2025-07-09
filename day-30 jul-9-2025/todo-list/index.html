@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <div class="w-screen h-screen flex">
+        <div class="w-96 p-4 rounded shadow m-auto">
+            <h2 class="text-lg font-bold mb-4">Todo List</h2>
+            <form action="" class="grid grid-cols-8" id="taskForm">
+                <input type="text" placeholder="Task Name"
+                    class="px-2 h-10 mb-4 border border-blue-600 rounded-l col-span-6 focus:outline-none" name="task" />
+                <button type="submit"
+                    class="border border-blue-600 rounded-r border-l-0 col-span-2 h-10 cursor-pointer bg-blue-600 font-bold text-white hover:bg-blue-800">Add
+                    Task</button>
+            </form>
+            <ul>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="w-screen h-screen fixed top-0 left-0 bg-black/60 flex opacity-0 transition-all duration-300 ease-in-out invisible"
+        id="taskModal">
+        <div class="w-96 m-auto bg-white p-4 rounded shadow">
+            <h2 class="text-lg font-bold mb-4 flex justify-between">
+                Task Details
+                <button class="cursor-pointer text-red-600 hover:text-red-800"
+                    onclick="document.getElementById('taskModal').classList.add('invisible', 'opacity-0')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </h2>
+            <p class="mb-4" id="taskDescription"></p>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="w-screen h-screen fixed top-0 left-0 bg-black/60 flex opacity-0 transition-all duration-300 ease-in-out invisible"
+        id="editModal">
+        <div class="w-96 m-auto bg-white p-4 rounded shadow">
+            <h2 class="text-lg font-bold mb-4 flex justify-between">
+                Edit Task
+                <button class="cursor-pointer text-red-600 hover:text-red-800"
+                    onclick="document.getElementById('editModal').classList.add('invisible', 'opacity-0')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </h2>
+            <form action="" id="editForm">
+                <input type="text" placeholder="Edit Task Name"
+                    class="px-2 h-10 mb-4 border border-blue-600 rounded focus:outline-none" name="editTask" />
+                <input type="hidden" name="taskId" value="">
+                <button type="submit"
+                    class="border border-blue-600 rounded h-10 cursor-pointer bg-blue-600 font-bold text-white hover:bg-blue-800">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="w-screen h-screen fixed top-0 left-0 bg-black/60 flex opacity-0 transition-all duration-300 ease-in-out invisible"
+        id="deleteModal">
+        <div class="w-96 m-auto bg-white p-4 rounded shadow">
+            <h2 class="text-lg font-bold mb-4 flex justify-between">
+                Delete Task
+                <button class="cursor-pointer text-red-600 hover:text-red-800"
+                    onclick="document.getElementById('deleteModal').classList.add('invisible', 'opacity-0')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </h2>
+            <p class="mb-4" id="deleteTaskDescription"></p>
+            <form action="" id="deleteForm">
+                <input type="hidden" name="deleteTaskId" value="">
+                <button type="submit"
+                    class="border border-red-600 rounded h-10 cursor-pointer bg-red-600 font-bold text-white hover:bg-red-800">Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const taskModal = document.getElementById('taskModal');
+        const taskForm = document.getElementById('taskForm');
+        const editForm = document.getElementById('editForm');
+        const deleteForm = document.getElementById('deleteForm');
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteTaskDescription = document.getElementById('deleteTaskDescription');
+        
+        taskForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(taskForm);
+            const taskInput = formData.get('task');
+            const taskName = taskInput.trim();
+
+            if (taskName) {
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between mb-2';
+                li.innerHTML = `
+                    <span class="text-gray-800 truncate">${taskName}</span>
+                    <div class="flex items-center">
+                        <button class="text-green-600 hover:text-green-800 mr-2 viewTask" data-title="${taskName}">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="text-blue-600 hover:text-blue-800 mr-2 editTask" data-title="${taskName}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="text-red-600 hover:text-red-800 delTask" data-title="${taskName}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                document.querySelector('ul').appendChild(li);
+                taskForm.reset();
+                // Set Data into localstorage
+                let data;
+                if (localStorage.getItem("tasks")) {
+                    data = JSON.parse(localStorage.getItem("tasks"));
+                    // push taskName
+                    data.push(taskName);
+                    localStorage.setItem("tasks", JSON.stringify(data));
+                } else {
+                    data = [];
+                    data.push(taskName);
+                    localStorage.setItem("tasks", JSON.stringify(data));
+                }
+                viewTaskFunc();
+                editTaskFunc();
+                delTaskFunc();
+            }
+        });
+
+        // Load tasks from localStorage on page load
+        window.addEventListener('load', () => {
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.forEach(taskName => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between mb-2';
+                li.innerHTML = `
+                    <span class="text-gray-800 truncate">${taskName}</span>
+                    <div class="flex items-center">
+                        <button class="text-green-600 hover:text-green-800 mr-2 viewTask" data-title="${taskName}">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="text-blue-600 hover:text-blue-800 mr-2 editTask" data-title="${taskName}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="text-red-600 hover:text-red-800 delTask" data-title="${taskName}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                document.querySelector('ul').appendChild(li);
+                viewTaskFunc();
+                editTaskFunc();
+                delTaskFunc();
+            });
+        });
+
+        const viewTaskFunc = () => {
+            document.querySelectorAll('.viewTask').forEach(button => {
+                button.addEventListener('click', () => {
+                    const taskTitle = button.getAttribute('data-title');
+                    document.getElementById('taskDescription').textContent = `${taskTitle}`;
+                    taskModal.classList.remove('invisible', 'opacity-0');
+                });
+            });
+        }
+
+        const editTaskFunc = () => {
+            document.querySelectorAll('.editTask').forEach(button => {
+                button.addEventListener('click', () => {
+                    const taskTitle = button.getAttribute('data-title');
+                    const editForm = document.getElementById('editForm');
+                    editForm.querySelector('input[name="editTask"]').value = taskTitle;
+                    editForm.querySelector('input[name="taskId"]').value = Array.from(button.parentElement.parentElement.parentElement.children).indexOf(button.parentElement.parentElement); 
+                    editForm.onsubmit = (e) => {
+                        e.preventDefault();
+                        const newTaskName = editForm.querySelector('input[name="editTask"]').value.trim();
+                        if (newTaskName) {
+                            li.querySelector('span').textContent = newTaskName;
+                            // Update localStorage
+                            data[data.indexOf(taskTitle)] = newTaskName;
+                            localStorage.setItem("tasks", JSON.stringify(data));
+                            document.getElementById('editModal').classList.add('invisible', 'opacity-0');
+                        }
+                    };
+                    document.getElementById('editModal').classList.remove('invisible', 'opacity-0');
+                });
+            });
+        }
+
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(editForm);
+            const newTaskName = formData.get('editTask').trim();
+            const taskId = formData.get('taskId');
+            if (newTaskName) {
+                const li = document.querySelectorAll('ul li')[taskId];
+                li.querySelector('span').textContent = newTaskName;
+                // Update localStorage
+                let data = JSON.parse(localStorage.getItem("tasks"));
+                data[taskId] = newTaskName;
+                localStorage.setItem("tasks", JSON.stringify(data));
+                document.getElementById('editModal').classList.add('invisible', 'opacity-0');
+            }
+        });
+
+        const delTaskFunc = () => {
+            document.querySelectorAll('.delTask').forEach(button => {
+                button.addEventListener('click', () => {
+                    const taskTitle = button.getAttribute('data-title');
+                    deleteTaskDescription.textContent = `Are you sure you want to delete the task: "${taskTitle}"?`;
+                    deleteForm.querySelector('input[name="deleteTaskId"]').value = Array.from(button.parentElement.parentElement.parentElement.children).indexOf(button.parentElement.parentElement);
+                    deleteForm.onsubmit = (e) => {
+                        e.preventDefault();
+                        const taskId = deleteForm.querySelector('input[name="deleteTaskId"]').value;
+                        const li = document.querySelectorAll('ul li')[taskId];
+                        li.remove();
+                        // Update localStorage
+                        let data = JSON.parse(localStorage.getItem("tasks"));
+                        data.splice(taskId, 1);
+                        localStorage.setItem("tasks", JSON.stringify(data));
+                        document.getElementById('deleteModal').classList.add('invisible', 'opacity-0');
+                    };
+                    document.getElementById('deleteModal').classList.remove('invisible', 'opacity-0');
+                });
+            });
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
