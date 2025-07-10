@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div class="w-screen relative h-96 overflow-hidden">
+        <div class="absolute top-0 left-0 w-full transition-all duration-500 ease-in-out">
+            <img src="./images/slider-1.jpg" alt="" class="w-full h-96 object-cover object-bottom" />
+            <div class="absolute left-1/2 bottom-5 transform -translate-x-1/2 text-white text-center bg-black/60 p-5 rounded-lg">
+                <h2 class="text-3xl font-bold">This is slider 1</h2>
+                <p class="italic">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis, magni. Dolorum perspiciatis repudiandae sequi praesentium, vero omnis aspernatur necessitatibus possimus odio id similique error cum culpa amet ex alias vitae?
+                </p>
+                <button class="mt-2 bg-white text-black py-2 px-4 rounded cursor-pointer hover:bg-gray-200">Read more</button>
+            </div>
+        </div>
+        <div class="absolute top-0 left-0 w-full transition-all duration-500 ease-in-out opacity-0 invisible">
+            <img src="./images/slider-2.jpg" alt="" class="w-full h-96 object-cover object-bottom" />
+            <div class="absolute left-1/2 bottom-5 transform -translate-x-1/2 text-white text-center bg-black/60 p-5 rounded-lg">
+                <h2 class="text-3xl font-bold">This is slider 2</h2>
+                <p class="italic">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis, magni. Dolorum perspiciatis repudiandae sequi praesentium, vero omnis aspernatur necessitatibus possimus odio id similique error cum culpa amet ex alias vitae?
+                </p>
+                <button class="mt-2 bg-white text-black py-2 px-4 rounded cursor-pointer hover:bg-gray-200">Read more</button>
+            </div>
+        </div>
+        <div class="absolute top-0 left-0 w-full transition-all duration-500 ease-in-out opacity-0 invisible">
+            <img src="./images/slider-3.jpg" alt="" class="w-full h-96 object-cover object-bottom" />
+            <div class="absolute left-1/2 bottom-5 transform -translate-x-1/2 text-white text-center bg-black/60 p-5 rounded-lg">
+                <h2 class="text-3xl font-bold">This is slider 3</h2>
+                <p class="italic">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis, magni. Dolorum perspiciatis repudiandae sequi praesentium, vero omnis aspernatur necessitatibus possimus odio id similique error cum culpa amet ex alias vitae?
+                </p>
+                <button class="mt-2 bg-white text-black py-2 px-4 rounded cursor-pointer hover:bg-gray-200">Read more</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      const mainSlide = document.querySelector(".w-screen");
+      const slides = document.querySelectorAll('.w-screen > div');
+      let currentIndex = 0;
+
+      function showSlide(index) {
+          slides.forEach((slide, i) => {
+              if (i === index) {
+                  slide.style.opacity = '1';
+                  slide.style.visibility = 'visible';
+              } else {
+                  slide.style.opacity = '0';
+                  slide.style.visibility = 'hidden';
+              }
+          });
+      }
+
+      function nextSlide() {
+          currentIndex = (currentIndex + 1) % slides.length;
+          showSlide(currentIndex);
+      }
+
+      // Show the first slide initially
+      showSlide(currentIndex);
+
+      // Change slide every 3 seconds
+      let runSlide = setInterval(nextSlide, 3000);
+
+      mainSlide.addEventListener("mouseover", () => {
+        clearInterval(runSlide);
+      })
+
+      mainSlide.addEventListener("mouseout", () => {
+        runSlide = setInterval(nextSlide, 3000);
+      })
+    </script>
+  </body>
+</html>
