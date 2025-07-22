@@ -1,12 +1,15 @@
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import { Outlet } from 'react-router';
+import { AnimatePresence } from 'motion/react';
 
 const Layouts = () => {
     return (
         <>
             <Header />
-            <Outlet />
+            <AnimatePresence mode="wait">
+                <Outlet />
+            </AnimatePresence>
             <Footer />
         </>
     );
