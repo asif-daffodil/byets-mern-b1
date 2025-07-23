@@ -5,7 +5,16 @@ import { toast, ToastContainer } from "react-toastify";
 
 const Contact = () => {
     const handleClick = () => {
-        toast.success("Message sent successfully!");
+        toast.success("ha ha ha!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            style: { top: "90px", right: 0, position: "fixed" },
+        });
     }
 
     return (
