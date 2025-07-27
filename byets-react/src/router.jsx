@@ -6,6 +6,7 @@ import Contact from "./Pages/Contact";
 import Blog from "./Pages/Blog";
 import Gallery from "./Pages/Gallery";
 import SignIn from "./Pages/SignIn";
+import UserCompo from "./Components/UserCompo";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         {
             path: "/sign-in",
             element: <SignIn />,
+        },
+        {
+            path: "/users",
+            element: <UserCompo />,
         }
     ],
   }

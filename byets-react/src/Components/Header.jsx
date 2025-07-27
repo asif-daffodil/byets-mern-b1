@@ -43,6 +43,9 @@ export default function Header() {
           <li>
             <NavLink to="/sign-in" className={({isActive}) => isActive ? "text-white underline": "text-stone-300 hover:text-white"}>Sign In</NavLink>
           </li>
+          <li>
+            <NavLink to="/users" className={({isActive}) => isActive ? "text-white underline": "text-stone-300 hover:text-white"}>Users</NavLink>
+          </li>
         </ul>
       </div>
     </nav>
