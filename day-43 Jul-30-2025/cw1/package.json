@@ -1,0 +1,16 @@
+{
+  "name": "our-node",
+  "version": "1.0.0",
+  "description": "this is our first node project",
+  "license": "ISC",
+  "author": "batch-1",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1"
+  }
+}
