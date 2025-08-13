@@ -3,11 +3,21 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     try {
+        // validate
+        if (!name || !email || !password || !role) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        // role is user or vendor
+        if (role !== 'user' && role !== 'vendor') {
+            return res.status(400).json({ message: "Invalid role" });
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ name, email, password: hashedPassword });
+        const user = new User({ name, email, password: hashedPassword, role });
         await user.save();
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
