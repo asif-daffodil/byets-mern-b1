@@ -19,6 +19,9 @@ app.use('/api', apiRouter);
 const userRouter = require('./router/userRouter');
 app.use('/user', userRouter);
 
+const authRouter = require('./router/authRouter');
+app.use('/auth', authRouter);
+
 app.listen(4000, () => {
     console.log('Server is running on port 4000');
 })

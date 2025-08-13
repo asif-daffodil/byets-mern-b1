@@ -17,6 +17,23 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    role: {
+        type: String,
+        enum: ['user', 'admin', 'vendor'],
+        default: 'user'
+    },
+    profilePicture: {
+        type: String,
+        default: 'default.jpg'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
     }
 })
 
