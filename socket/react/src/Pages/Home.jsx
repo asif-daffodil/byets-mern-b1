@@ -17,10 +17,18 @@ export default function Home() {
 
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
+    socket.on('welcome', (message) => {
+      console.log(message);
+    });
+    socket.on("jasonData", (data) => {
+      console.log(data);
+    });
 
     return () => {
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);
+      socket.off('welcome');
+      socket.off("jasonData");
     };
   }, []);
 
