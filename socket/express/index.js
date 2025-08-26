@@ -17,6 +17,13 @@ io.on("connection", (socket) => {
 
     socket.emit("welcome", "Welcome to the Socket.IO server!");
     socket.emit('jasonData', { name: "Joshim", age: 30 });
+    setInterval(() => {
+        socket.emit('time', new Date().toISOString());
+    }, 100);
+
+    socket.on("msg", (data) => {
+        socket.emit("returnMsg", [...data]);
+    });
 
     socket.on("disconnect", () => {
         console.log("User disconnected");
